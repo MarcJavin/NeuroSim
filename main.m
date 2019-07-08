@@ -2,8 +2,8 @@
 DT = 0.1;
 
 % weight matrix
-W = [0 1 0; 
-    -1 0 1; 
+W = [0 1.4 0; 
+    -1.2 0 3; 
     0.2 -1.5 0];
 
 
@@ -19,7 +19,12 @@ params.syn.R0 = 5;
 params.syn.RMAX = 100;
 
 %computation
-out = calculate(W, [], [], DT, params);
+INIT = [];
+INJ = zeros(100,3);
+% INJ(:,1) = 0.2*sin(1:100);
+INJ(:,2) = 0.05;
+% INJ(:,3) = 0.0001 * (1:100) .* (1:100)
+out = calculate(W, INIT, INJ, DT, params);
 
 %plotting
 figure(1)
