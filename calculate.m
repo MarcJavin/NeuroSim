@@ -10,6 +10,7 @@ function X = calculate(w, init, inj, dt, params)
 % X : [#timesteps  , #neuron], resulting neural activity
 %
 % Written by Marc Javin
+
     if isempty(init)
         init = zeros(1, size(w, 1));
     end
@@ -33,7 +34,7 @@ function xo = step(x, i, w, dt, params)
 % dt : scalar, time step
 
 % Outputs:
-% x : [1, #neuron], resulting neural activity
+% xo : [1, #neuron], resulting neural activity
 %
 % Written by Marc Javin
 
