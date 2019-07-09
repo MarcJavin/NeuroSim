@@ -1,4 +1,4 @@
-function [syn_xo, io] = synrate(x, ~, ~, params)
+function [gap_xo, io] = gap(x, ~, ~, params)
 %% Perform one time step simulation of a synapse
 
 % Inputs:
@@ -13,10 +13,10 @@ function [syn_xo, io] = synrate(x, ~, ~, params)
 %
 % Written by Marc Javin
 
-    syn_xo = [];
-    R0 = params.R0;
-    RMAX = params.RMAX;
-    x = R0.*tanh(x/R0) .* (x < 0) + (RMAX - R0).*tanh(x/(RMAX-R0)) .* (x>=0);
-    io = x * params.W;
+    gap_xo = [];
+    n_neur = size(x, 2);
+    curs = repmat(x', 1, n_neur) - repmat(x, n_neur, 1) 
+    io = params.W .* curs
+    io = sum(io, 1)
     
 end

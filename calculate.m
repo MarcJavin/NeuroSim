@@ -1,4 +1,4 @@
-function X = calculate(w, init, inj, dt, params)
+function activity = calculate(init, inj, dt, params)
 %% Perform one time step simulation of the circuit
 
 % Inputs:
@@ -8,25 +8,28 @@ function X = calculate(w, init, inj, dt, params)
 % dt : scalar, time step duration
 
 % Outputs:
-% X : [#timesteps, #neuron], resulting neural activity
+% activity : [#timesteps, #neuron], resulting neural activity
 %
 % Written by Marc Javin
 
+    n_neur = size(params.syn.W, 1);
     if isempty(init)
-        init = zeros(1, size(w, 1));
+        init = zeros(1, n_neur);
     end
     if isempty(inj)
-        inj = zeros(100, size(w,1));
+        inj = zeros(100, n_neur);
     end
-    X = zeros(size(inj, 1), size(w, 1));
-    X(1,:) = init;
+    activity = zeros(size(inj, 1), n_neur);
+    activity(1,:) = init;
+    syn_x = [];
+    gap_x = [];
     for i = 1:size(inj)
-        X(i+1, :) = step(X(i, :), inj(i, :), w, dt, params);
+        [activity(i+1, :), syn_x, gap_x] = step(activity(i, :), inj(i, :), syn_x, gap_x, dt, params);
     end
 end
 
 
-function xo = step(x, i, w, dt, params)
+function [xo, syn_xo, gap_xo] = step(x, i, syn_x, gap_x, dt, params)
 %% Perform one time step simulation of the circuit
 
 % Inputs:
@@ -39,6 +42,7 @@ function xo = step(x, i, w, dt, params)
 %
 % Written by Marc Javin
 
-    i = i + params.synfunc(x, w, params.syn);
-    xo = params.neurfunc(x, i, dt, params.neur);
+    [syn_xo, i_syn] = params.syn.func(x, syn_x, dt, params.syn);
+    [gap_xo, i_gap] = params.gap.func(x, gap_x, dt, params.gap);
+    xo = params.neur.func(x, i + i_syn + i_gap, dt, params.neur);
 end

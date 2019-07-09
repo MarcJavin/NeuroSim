@@ -3,7 +3,7 @@
 ## Usage
 
 - open in Matlab
-- modify the file main.m
+- modify and run the file main.m
 
 ## Architecture
 
