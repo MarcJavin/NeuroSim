@@ -6,9 +6,9 @@ function xo = leakint(x, i, dt, params)
 % i : [1, #neuron], injected current
 % dt : scalar, time step
 % params :  
-            % E : reversal potential
-            % G : channel conductance
-            % Cm : membrane capacitance
+            % E : scalar or [1, #neuron], reversal potential
+            % G : scalar or [1, #neuron], channel conductance
+            % Cm : scalar or [1, #neuron], membrane capacitance
 
 % Outputs:
 % xo : [1, #neuron], resulting neural activity

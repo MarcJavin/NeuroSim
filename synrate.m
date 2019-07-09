@@ -5,8 +5,8 @@ function io = synrate(x, w, params)
 % x : [1, #neuron], current neural activity
 % w : [#neuron, #neuron], weight matrix
 % params :  
-            % R0 : baseline rate
-            % RMAX : maximum firing rate
+            % R0 : scalar or [1, #neuron], baseline rate
+            % RMAX : scalar or [1, #neuron], maximum firing rate
 
 % Outputs:
 % io : [1, #neuron], resulting synaptic currents
