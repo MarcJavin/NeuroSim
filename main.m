@@ -3,9 +3,14 @@
 DT = 0.1;
 
 % weight matrix
-W = [0 1.4 0; 
-    -1.2 0 3; 
-    0.2 -1.5 0];
+Ws = [0   1.4  0; 
+     -1.2   0  3; 
+     0.2 -1.5  0];
+Wg = 0;
+
+%get weights from correlation
+CONNS = readtable('data/corr_W.csv');
+Ws = csvread('data/corr_W.csv', 1, 1);
 
 %neural model and parameters
 params.neur.func = @leakint;
@@ -13,26 +18,27 @@ params.neur.E = 0;
 params.neur.G = 1;
 params.neur.Cm = 1;
 
-%synaptic model and parameters
+%rate synaptic model and parameters
 params.syn.func = @synrate;
 params.syn.R0 = 5;
 params.syn.RMAX = 100;
+
+% %sigmoidal synaptic model
+% params.syn.func = @synsig;
+% params.syn.E = 10;
+% params.syn.MDP = 5;
+% params.syn.SCALE = 20;
+
 % weight matrix
-params.syn.W = W;
+params.syn.W = Ws;
             
 %gap junction model and parameters
 params.gap.func = @gap;
-% weight matrix
-params.gap.W = [0 2 0; 
-                0 0 0; 
-                0 0 0];
+params.gap.W = Wg;
 
 %computation
 INIT = [];
-INJ = ones(100,3);
-% INJ(:,1) = 0.2*sin(1:100);
-% INJ(:,2) = 0.05;
-% INJ(:,3) = 0.0001 * (1:100) .* (1:100)
+INJ = ones(100, size(Ws,1));
 out = calculate(INIT, INJ, DT, params);
 
 %plotting
