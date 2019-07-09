@@ -3,11 +3,12 @@ function X = calculate(w, init, inj, dt, params)
 
 % Inputs:
 % init : [1, #neuron], initial neural activity
-% i : [#timesteps, #neuron], injected current
-% dt : scalar, time step
+% inj : [#timesteps, #neuron], injected current, defines numbers of time
+% steps
+% dt : scalar, time step duration
 
 % Outputs:
-% X : [#timesteps  , #neuron], resulting neural activity
+% X : [#timesteps, #neuron], resulting neural activity
 %
 % Written by Marc Javin
 
@@ -15,7 +16,7 @@ function X = calculate(w, init, inj, dt, params)
         init = zeros(1, size(w, 1));
     end
     if isempty(inj)
-        inj = ones(100, size(w,1));
+        inj = zeros(100, size(w,1));
     end
     X = zeros(size(inj, 1), size(w, 1));
     X(1,:) = init;

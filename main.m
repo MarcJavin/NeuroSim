@@ -1,4 +1,5 @@
 
+% time step
 DT = 0.1;
 
 % weight matrix
@@ -24,6 +25,7 @@ INJ = zeros(100,3);
 % INJ(:,1) = 0.2*sin(1:100);
 INJ(:,2) = 0.05;
 % INJ(:,3) = 0.0001 * (1:100) .* (1:100)
+INJ = [];
 out = calculate(W, INIT, INJ, DT, params);
 
 %plotting
